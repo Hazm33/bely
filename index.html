@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BELY Trading Bot</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b1020;color:#fff;font-family:Arial,sans-serif;padding:18px}
+header{padding:18px 0;border-bottom:1px solid #26314b}
+h1{color:#54e0b5;margin:0}
+p{color:#aab5cc}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.card{background:#151e33;border:1px solid #293653;border-radius:14px;padding:16px}
+h3{margin:0 0 12px;color:#54e0b5}
+.value{font-size:23px;font-weight:bold}
+.status{color:#ffc66d;font-size:13px}
+button{width:100%;padding:14px;border:0;border-radius:10px;background:#54e0b5;color:#08131a;font-weight:bold;margin-top:12px}
+.stop{background:#e75b70;color:white}
+.wide{grid-column:1/-1}
+footer{text-align:center;color:#71809c;font-size:12px;margin:22px}
+</style>
+</head>
+<body>
+<header>
+<h1>BELY</h1>
+<p>منصة مراقبة التداول الذكي</p>
+</header>
+
+<div class="grid">
+<div class="card">
+<h3>SPOT</h3>
+<div class="value">نشط تجريبياً</div>
+<p class="status">غير متصل بالمنصات</p>
+</div>
+<div class="card">
+<h3>FUTURES</h3>
+<div class="value">1x Demo</div>
+<p class="status">غير متصل بالمنصات</p>
+</div>
+<div class="card">
+<h3>الرصيد التجريبي</h3>
+<div class="value">50 USDT</div>
+<p>رصيد افتراضي للعرض فقط</p>
+</div>
+<div class="card">
+<h3>الربح والخسارة</h3>
+<div class="value">0.00 USDT</div>
+<p>لا توجد صفقات حقيقية</p>
+</div>
+<div class="card wide">
+<h3>المنصات</h3>
+<p>Binance — غير متصل</p>
+<p>OKX — غير متصل</p>
+<p>Bitget — غير متصل</p>
+<p>MEXC — غير متصل</p>
+</div>
+<div class="card wide">
+<h3>PUMP HUNTER</h3>
+<p>سيتم تجهيز ماسح العملات والسيولة والحجم ورصد فرص الحركة قبل البامب.</p>
+</div>
+<div class="card wide">
+<h3>GEM FINDER</h3>
+<p>سيتم تجهيز نظام اكتشاف العملات المرشحة للاحتفاظ ومتابعة تطورها.</p>
+</div>
+<div class="card wide">
+<h3>حالة النظام</h3>
+<p>هذه واجهة أولية فقط. لم يتم ربط محرك التداول أو مفاتيح API بعد.</p>
+<button class="stop" onclick="alert('هذه واجهة تجريبية فقط، زر الإيقاف لا يتحكم في تداول حقيقي.')">إيقاف طوارئ تجريبي</button>
+</div>
+</div>
+<footer>BELY © 2026 — Prototype</footer>
+</body>
+</html>
