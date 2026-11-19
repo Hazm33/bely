@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -13,12 +14,11 @@ p{color:#aab5cc}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
 .card{background:#151e33;border:1px solid #293653;border-radius:14px;padding:16px}
 h3{margin:0 0 12px;color:#54e0b5}
-.value{font-size:23px;font-weight:bold}
+.value{font-size:21px;font-weight:bold;overflow-wrap:anywhere}
 .status{color:#ffc66d;font-size:13px}
-button{width:100%;padding:14px;border:0;border-radius:10px;background:#54e0b5;color:#08131a;font-weight:bold;margin-top:12px}
-.stop{background:#e75b70;color:white}
 .wide{grid-column:1/-1}
 footer{text-align:center;color:#71809c;font-size:12px;margin:22px}
+@media(max-width:480px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -30,24 +30,28 @@ footer{text-align:center;color:#71809c;font-size:12px;margin:22px}
 <div class="grid">
 <div class="card">
 <h3>SPOT</h3>
-<div class="value">نشط تجريبياً</div>
+<div class="value">تجريبي</div>
 <p class="status">غير متصل بالمنصات</p>
 </div>
+
 <div class="card">
 <h3>FUTURES</h3>
-<div class="value">1x Demo</div>
+<div class="value">تجريبي فقط</div>
 <p class="status">غير متصل بالمنصات</p>
 </div>
+
 <div class="card">
 <h3>الرصيد التجريبي</h3>
-<div class="value">50 USDT</div>
-<p>رصيد افتراضي للعرض فقط</p>
+<div class="value" id="balance">50 USDT</div>
+<p>رصيد افتراضي وليس أموالاً حقيقية</p>
 </div>
+
 <div class="card">
-<h3>الربح والخسارة</h3>
-<div class="value">0.00 USDT</div>
-<p>لا توجد صفقات حقيقية</p>
+<h3>حالة البوت</h3>
+<div class="value" id="botStatus">جاري الفحص</div>
+<p class="status" id="engineStatus">انتظار البيانات</p>
 </div>
+
 <div class="card wide">
 <h3>المنصات</h3>
 <p>Binance — غير متصل</p>
@@ -55,20 +59,56 @@ footer{text-align:center;color:#71809c;font-size:12px;margin:22px}
 <p>Bitget — غير متصل</p>
 <p>MEXC — غير متصل</p>
 </div>
+
 <div class="card wide">
 <h3>PUMP HUNTER</h3>
-<p>سيتم تجهيز ماسح العملات والسيولة والحجم ورصد فرص الحركة قبل البامب.</p>
+<p>ماسح العملات والسيولة والحجم ورصد فرص الحركة — قيد التجهيز.</p>
 </div>
+
 <div class="card wide">
 <h3>GEM FINDER</h3>
-<p>سيتم تجهيز نظام اكتشاف العملات المرشحة للاحتفاظ ومتابعة تطورها.</p>
+<p>اكتشاف العملات المرشحة ومتابعة تطورها — قيد التجهيز.</p>
 </div>
+
 <div class="card wide">
-<h3>حالة النظام</h3>
-<p>هذه واجهة أولية فقط. لم يتم ربط محرك التداول أو مفاتيح API بعد.</p>
-<button class="stop" onclick="alert('هذه واجهة تجريبية فقط، زر الإيقاف لا يتحكم في تداول حقيقي.')">إيقاف طوارئ تجريبي</button>
+<h3>حالة الاتصال</h3>
+<p id="connection">جاري الاتصال بالمحرك...</p>
+<p id="lastUpdate">لم يتم تحديث البيانات بعد</p>
 </div>
 </div>
-<footer>BELY © 2026 — Prototype</footer>
+
+<footer>BELY © 2026 — Paper Trading Prototype</footer>
+
+<script>
+async function updateStatus(){
+  try{
+    const response = await fetch('/api/status',{cache:'no-store'});
+    if(!response.ok) throw new Error('HTTP '+response.status);
+    const data = await response.json();
+
+    document.getElementById('balance').textContent =
+      Number(data.virtual_balance).toFixed(2)+' USDT';
+
+    document.getElementById('botStatus').textContent =
+      data.status || 'غير معروف';
+
+    document.getElementById('engineStatus').textContent =
+      data.engine || 'غير معروف';
+
+    document.getElementById('connection').textContent =
+      'متصل بالمحرك — وضع تجريبي فقط';
+
+    document.getElementById('lastUpdate').textContent =
+      'آخر تحديث: '+new Date(data.time).toLocaleString('ar-EG');
+  }catch(error){
+    document.getElementById('connection').textContent =
+      'تعذر الاتصال بالمحرك';
+    document.getElementById('botStatus').textContent =
+      'غير متصل';
+  }
+}
+updateStatus();
+setInterval(updateStatus,5000);
+</script>
 </body>
 </html>
